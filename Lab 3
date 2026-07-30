@@ -1,0 +1,32 @@
+import pandas as pd
+
+# Load dataset
+data = pd.read_csv("workload_data.csv")
+
+print("Training Data:\n")
+print(data)
+
+# Initialize the most specific hypothesis
+hypothesis = ['0'] * (len(data.columns) - 1)
+
+print("\nInitial Hypothesis:")
+print(hypothesis)
+
+# Apply Find-S Algorithm
+for i, row in data.iterrows():
+
+    if row.iloc[-1] == "Yes":   # Consider only positive examples
+
+        for j in range(len(hypothesis)):
+
+            if hypothesis[j] == '0':
+                hypothesis[j] = row.iloc[j]
+
+            elif hypothesis[j] != row.iloc[j]:
+                hypothesis[j] = '?'
+
+    print(f"\nAfter processing Workload {i+1}:")
+    print(hypothesis)
+
+print("\nFinal Hypothesis:")
+print(hypothesis)
